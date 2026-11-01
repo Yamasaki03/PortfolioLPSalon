@@ -1,0 +1,1840 @@
+@charset "UTF-8";
+
+/* =========================================================
+   LAYERED — 表参道・原宿のインナーカラー専門美容室 LP
+   テーマ:「重なる、くすみ色」/ 動き:「めくると、内側の色がのぞく」
+   ========================================================= */
+
+/* ---------- Design tokens ---------- */
+:root {
+  /* 配色 */
+  --base: #FBF7F5;
+  --blush: #EED9D9;
+  --lavender: #D9D2E3;
+  --milktea: #E3D2C3;
+  --ink: #3B3436;
+  --ink-sub: #6F6568;
+  --ink-body: #4E4548;
+  --cta: #9E4F63;
+  --cta-hover: #8C4458;
+  --line: #EADFDC;
+  --line-strong: #D9CCC8;
+  --white: #FFFFFF;
+  --bg-blush: #F4ECEC;
+  --bg-lavender: #EFEAF3;
+  --bg-dark: #3B3436;
+  --bg-darker: #2E2829;
+
+  /* 書体 */
+  --font-ja: 'Noto Sans JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', sans-serif;
+  --font-serif: 'Playfair Display', 'Times New Roman', serif;
+  --font-en: 'Jost', 'Helvetica Neue', sans-serif;
+
+  /* 動き */
+  --motion-fast: 200ms;
+  --motion-base: 600ms;
+  --motion-reveal: 1000ms;
+  --motion-hero: 1400ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* レイアウト */
+  --gutter: 20px;
+  --header-h: 60px;
+  --section-py: 72px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 24px;
+    --header-h: 68px;
+    --section-py: 104px;
+  }
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 8px);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+html.is-locked { overflow: hidden; }
+
+body {
+  margin: 0;
+  background: var(--base);
+  color: var(--ink);
+  font-family: var(--font-ja);
+  font-size: 16px;
+  line-height: 1.9;
+  font-feature-settings: "palt" 1;
+  letter-spacing: 0.02em;
+  word-break: auto-phrase; /* 和文を文節で折り返す(対応ブラウザのみ) */
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+a { color: var(--ink); }
+p, h1, h2, h3, ul, ol, dl, dd, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+button { font: inherit; color: inherit; }
+em { font-style: normal; }
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: 8px; left: 8px;
+  z-index: 100;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: var(--white);
+  border-radius: 999px;
+  transform: translateY(-200%);
+  transition: transform var(--motion-fast) ease;
+}
+.skip-link:focus { transform: none; }
+
+.num { font-family: var(--font-en); }
+
+/* ---------- Layout ---------- */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.container--narrow { max-width: 900px; }
+.container--wide { max-width: 1200px; }
+
+.section {
+  position: relative;
+  padding: var(--section-py) 0;
+}
+.section--blush { background: var(--bg-blush); }
+.section--lavender { background: var(--bg-lavender); }
+
+/* ---------- Section heading ---------- */
+.sec-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+.sec-head--left { align-items: flex-start; text-align: left; margin-bottom: 28px; }
+.sec-head__en {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1.4;
+  color: var(--cta);
+  transform: rotate(-3deg);
+}
+.sec-head__title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+}
+.sec-head__lead {
+  font-size: 15px;
+  color: var(--ink-sub);
+}
+.sec-head__lead--note { font-size: 14px; }
+
+@media (min-width: 768px) {
+  .sec-head { margin-bottom: 48px; }
+  .sec-head__en { font-size: 20px; }
+  .sec-head__title { font-size: 32px; }
+  .sec-head__lead { font-size: 16px; }
+}
+
+/* ---------- Logo ---------- */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  text-decoration: none;
+}
+.logo__mark {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  color: var(--ink);
+}
+.logo__e { color: var(--cta); }
+.logo__area {
+  display: none;
+  font-size: 12px;
+  color: var(--ink-sub);
+}
+@media (min-width: 768px) {
+  .logo__mark { font-size: 28px; }
+  .logo__area { display: inline; }
+}
+
+/* ---------- 予約ボタン(CTA専用色) ---------- */
+.cta {
+  position: relative;
+  display: inline-flex;
+  border: 0;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 0 30px;
+  border-radius: 999px;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--cta);
+  color: var(--white);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+  text-align: center;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform var(--motion-fast) ease,
+    background-color var(--motion-fast) ease;
+}
+.cta:hover { background: var(--cta-hover); color: var(--white); }
+.cta:active { transform: scale(0.97); }
+.cta:focus-visible { outline-color: var(--cta); border-radius: 999px; }
+
+/* 光が一度横切る */
+.cta::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: -1;
+  width: 30%;
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.38), rgba(255,255,255,0));
+  transform: translateX(-120%) skewX(-20deg);
+  pointer-events: none;
+}
+.cta.is-shining::after {
+  animation: ctaShine 1.1s ease var(--shine-delay, 0s) 1 both;
+}
+@keyframes ctaShine {
+  from { transform: translateX(-120%) skewX(-20deg); }
+  to   { transform: translateX(380%) skewX(-20deg); }
+}
+
+.cta__arrow {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--motion-fast) ease;
+}
+.cta:hover .cta__arrow { transform: translateX(3px); }
+.cta__label { transition: opacity var(--motion-fast) ease; }
+.cta__label.is-changing { opacity: 0; }
+
+.cta--sm {
+  min-height: 44px;
+  padding: 0 20px;
+  font-size: 15px;
+}
+.cta--lg {
+  min-height: 56px;
+  font-size: 17px;
+}
+@media (min-width: 768px) {
+  .cta--lg {
+    min-height: 64px;
+    padding: 0 36px;
+    font-size: 19px;
+  }
+}
+
+.cta-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.cta-wrap--center {
+  align-items: center;
+  margin-top: 40px;
+  text-align: center;
+}
+.cta-note {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-sub);
+}
+@media (min-width: 768px) {
+  .cta-note { font-size: 14px; }
+}
+
+/* ---------- Header ---------- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(251, 247, 245, 0.92);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.header__inner {
+  max-width: 1200px;
+  height: var(--header-h);
+  margin: 0 auto;
+  padding: 0 6px 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.gnav { display: none; }
+
+.menu-btn {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+.menu-btn__line {
+  position: absolute;
+  left: 12px;
+  width: 24px;
+  height: 1.6px;
+  border-radius: 2px;
+  background: var(--ink);
+  transition: transform 0.35s var(--ease-out);
+}
+.menu-btn__line:nth-child(1) { top: 20px; }
+.menu-btn__line:nth-child(2) { top: 27px; }
+.menu-btn[aria-expanded="true"] .menu-btn__line:nth-child(1) { transform: translateY(3.5px) rotate(45deg); }
+.menu-btn[aria-expanded="true"] .menu-btn__line:nth-child(2) { transform: translateY(-3.5px) rotate(-45deg); }
+
+@media (min-width: 900px) {
+  .header__inner { padding: 0 var(--gutter); }
+  .menu-btn { display: none; }
+  .gnav {
+    display: flex;
+    align-items: center;
+    gap: 4px 28px;
+    font-size: 15px;
+  }
+  .gnav a:not(.cta) {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    text-decoration: none;
+  }
+  .gnav a:not(.cta)::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 8px;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s var(--ease-out);
+  }
+  .gnav a:not(.cta):hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+/* ---------- Drawer (SP) ---------- */
+.drawer {
+  position: fixed;
+  inset: var(--header-h) 0 0;
+  z-index: 45;
+  overflow-y: auto;
+  background: var(--base);
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.6s var(--ease-out);
+}
+.drawer.is-open { clip-path: inset(0 0 0 0); }
+.drawer__nav {
+  display: flex;
+  flex-direction: column;
+  padding: 16px var(--gutter) 40px;
+}
+.drawer__nav a {
+  display: flex;
+  flex-direction: column;
+  padding: 14px 4px;
+  border-bottom: 1px solid var(--line);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+}
+.drawer.is-open .drawer__nav a {
+  opacity: 1;
+  transform: none;
+}
+.drawer.is-open .drawer__nav a:nth-child(1) { transition-delay: .10s; }
+.drawer.is-open .drawer__nav a:nth-child(2) { transition-delay: .14s; }
+.drawer.is-open .drawer__nav a:nth-child(3) { transition-delay: .18s; }
+.drawer.is-open .drawer__nav a:nth-child(4) { transition-delay: .22s; }
+.drawer.is-open .drawer__nav a:nth-child(5) { transition-delay: .26s; }
+.drawer.is-open .drawer__nav a:nth-child(6) { transition-delay: .30s; }
+.drawer.is-open .drawer__nav a:nth-child(7) { transition-delay: .34s; }
+.drawer__en {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--cta);
+}
+@media (min-width: 900px) {
+  .drawer { display: none; }
+}
+
+/* ---------- 背景の装飾の丸(ゆっくり漂う) ---------- */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+}
+.blob--a { animation: blobFloatA 24s ease-in-out infinite; }
+.blob--b { animation: blobFloatB 28s ease-in-out infinite; }
+@keyframes blobFloatA {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(40px, -30px) scale(1.06); }
+}
+@keyframes blobFloatB {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-36px, 28px) scale(0.95); }
+}
+
+/* =========================================================
+   1. ファーストビュー
+   ========================================================= */
+.hero {
+  position: relative;
+  overflow: clip;
+}
+.blob--lavender {
+  width: 360px; height: 360px;
+  top: 20px; right: -140px;
+  background: radial-gradient(circle, rgba(217,210,227,.95), rgba(217,210,227,0) 70%);
+}
+.blob--blush {
+  width: 320px; height: 320px;
+  bottom: 60px; left: -150px;
+  background: radial-gradient(circle, rgba(238,217,217,.95), rgba(238,217,217,0) 70%);
+}
+.hero__inner {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* アーチ写真とめくれる層 */
+.hero__visual {
+  position: relative;
+  align-self: center;
+  width: 250px;
+}
+.hero__arch {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 999px 999px 24px 24px;
+  overflow: hidden;
+  background: var(--lavender);
+}
+.hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 58% 50%;
+  animation: heroZoom 2.4s var(--ease-out) 0.35s both;
+}
+@keyframes heroZoom {
+  from { transform: scale(1.14); }
+  to   { transform: scale(1); }
+}
+.hero__layer {
+  position: absolute;
+  inset: 0 0 -24% 0;
+  /* 下端をゆるくカーブさせ、髪の毛先がめくれ上がるように見せる */
+  border-radius: 0 0 50% 50% / 0 0 22% 22%;
+  will-change: transform;
+}
+.hero__layer--milktea {
+  background: var(--milktea);
+  animation: heroPeel var(--motion-hero) var(--ease-out) 0.35s both;
+}
+.hero__layer--blush {
+  background: linear-gradient(180deg, var(--blush) 0%, #E6CFD9 100%);
+  animation: heroPeel var(--motion-hero) var(--ease-out) 0.6s both;
+}
+@keyframes heroPeel {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-102%); }
+}
+
+.hero__tag {
+  position: absolute;
+  left: -20px;
+  bottom: 40px;
+  padding: 8px 16px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.4;
+  white-space: nowrap;
+  animation: heroTag 0.9s var(--ease-spring) 2s both;
+}
+.hero__tag::before {
+  content: "";
+  display: inline-block;
+  width: 10px; height: 10px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: #B7A9C9;
+  vertical-align: 0;
+}
+@keyframes heroTag {
+  from { opacity: 0; transform: translateY(14px) rotate(-14deg); }
+  to   { opacity: 1; transform: translateY(0) rotate(-6deg); }
+}
+
+/* コピー */
+.hero__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.hero__label {
+  font-family: var(--font-en);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  line-height: 1.6;
+  color: var(--ink-sub);
+}
+.hero__catch {
+  margin-top: -8px;
+  font-size: 33px;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: 0.04em;
+}
+.hero__catch > span { display: block; }
+.hero__catch em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--cta);
+}
+.hero__title {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.7;
+}
+.hero__copy .cta-wrap { gap: 8px; }
+.hero__copy .cta { width: 100%; --shine-delay: 1.2s; }
+.hero__copy .cta-note { align-self: center; font-size: 12.5px; }
+
+.hero-up { animation: heroUp 0.8s var(--ease-out) var(--d, 0s) both; }
+@keyframes heroUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (min-width: 900px) {
+  .blob--lavender { width: 560px; height: 560px; top: -120px; right: -80px; }
+  .blob--blush { width: 480px; height: 480px; bottom: -160px; left: -120px; }
+  .hero__inner {
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 460px);
+    align-items: center;
+    gap: 48px 72px;
+    padding: 72px var(--gutter) 104px;
+  }
+  .hero__visual { order: 2; width: 100%; max-width: 460px; justify-self: center; }
+  .hero__arch { border-radius: 999px 999px 32px 32px; }
+  .hero__tag { left: -28px; bottom: 56px; padding: 10px 18px; font-size: 17px; }
+  .hero__copy { gap: 22px; }
+  .hero__label { font-size: 13px; letter-spacing: 0.24em; }
+  .hero__catch { margin-top: 0; font-size: clamp(40px, 4.2vw, 54px); }
+  .hero__title { font-size: 17px; line-height: 1.8; }
+  .hero__copy .cta-wrap { gap: 10px; padding-top: 8px; }
+  .hero__copy .cta { width: auto; }
+  .hero__copy .cta-note { align-self: flex-start; font-size: 14px; }
+}
+
+/* =========================================================
+   2. カラーシミュレーター
+   ========================================================= */
+#simulator .sec-head { margin-bottom: 24px; }
+.sim {
+  display: grid;
+  gap: 20px;
+}
+.sim__stage {
+  display: grid;
+  grid-template-columns: 136px 1fr;
+  align-items: center;
+  gap: 16px;
+}
+.sim__figure {
+  position: relative;
+  padding: 16px 12px 0;
+  border-radius: 999px 999px 18px 18px;
+  overflow: hidden;
+  background: var(--base);
+}
+.sim__summary {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.sim__summary-label { font-size: 13px; color: var(--ink-sub); }
+.sim__summary-color { font-size: 18px; font-weight: 700; line-height: 1.5; }
+.sim__summary-pos { font-size: 15px; line-height: 1.5; }
+.sim__summary-note { font-size: 13px; line-height: 1.5; color: var(--ink-sub); }
+
+/* イラスト */
+.hair { display: block; width: 100%; height: auto; overflow: visible; }
+.hair__body { fill: #F3E4DE; }
+.hair__neck { fill: #EBCDBE; }
+.hair__base,
+.hair__under { fill: #6B5548; }
+.hair__face { fill: #F2DDD0; }
+.hair__cheek { fill: #EDC1C1; opacity: 0.6; }
+.hair__eye { fill: none; stroke: #6B5548; stroke-width: 2.5; stroke-linecap: round; }
+.hair__mouth { fill: none; stroke: #B5677A; stroke-width: 3; stroke-linecap: round; }
+.hair__color {
+  fill: var(--sim-color);
+  transform: scaleY(0);
+  transform-box: fill-box;
+  transition:
+    fill var(--motion-fast) ease,
+    transform var(--motion-base) var(--ease-out);
+}
+.hair__color--up { transform-origin: 50% 100%; }
+.hair__color--down { transform-origin: 50% 0%; }
+.hair[data-pos="inner"] [data-zone="inner"] .hair__color,
+.hair[data-pos="earring"] [data-zone="earring"] .hair__color,
+.hair[data-pos="face"] [data-zone="face"] .hair__color {
+  transform: scaleY(1);
+}
+
+/* 色を選ぶ・位置を選ぶ */
+.sim__controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.sim__group {
+  margin: 0;
+  padding: 0;
+  border: none;
+  min-width: 0;
+}
+.sim__legend {
+  padding: 0 0 10px;
+  font-size: 16px;
+  font-weight: 700;
+}
+.sim__step {
+  margin-right: 4px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--cta);
+}
+
+.chips {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px 4px;
+}
+.chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 6px 2px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.chip__dot {
+  display: block;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 0 0 1px var(--line);
+  transition:
+    transform 0.25s var(--ease-spring),
+    box-shadow var(--motion-fast) ease;
+}
+.chip:hover .chip__dot { transform: scale(1.05); }
+.chip:active .chip__dot { transform: scale(0.9); }
+.chip[aria-pressed="true"] .chip__dot {
+  box-shadow: 0 0 0 3px var(--base), 0 0 0 5px var(--ink);
+  transform: scale(1.08);
+}
+.chip.is-pop .chip__dot { animation: chipPop 0.5s var(--ease-spring); }
+@keyframes chipPop {
+  0%   { transform: scale(0.86); }
+  60%  { transform: scale(1.16); }
+  100% { transform: scale(1.08); }
+}
+.chip__name {
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: center;
+}
+.chip[aria-pressed="true"] .chip__name { font-weight: 700; }
+
+.pills {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+.pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  padding: 6px 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--white);
+  line-height: 1.35;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+.pill:active { transform: scale(0.96); }
+.pill[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--white);
+}
+.pill__name { font-size: 15px; font-weight: 700; }
+.pill__note { font-size: 10.5px; white-space: nowrap; }
+
+.sim__result { margin-top: 4px; }
+.sim__result-text { display: none; }
+.sim__result .cta-wrap { align-items: stretch; }
+.sim__result .cta {
+  width: 100%;
+  padding: 0 20px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.sim__result .cta-note { text-align: center; }
+
+@media (min-width: 900px) {
+  #simulator .sec-head { margin-bottom: 48px; }
+  .sim {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    align-items: center;
+    gap: 40px 56px;
+  }
+  .sim__stage { display: block; }
+  .sim__figure {
+    padding: 40px 40px 0;
+    border-radius: 999px 999px 32px 32px;
+  }
+  .sim__summary { display: none; }
+  .sim__controls { gap: 28px; }
+  .sim__legend { font-size: 18px; padding-bottom: 14px; }
+  .chips { gap: 16px 8px; }
+  .chip__dot { width: 52px; height: 52px; }
+  .pills { gap: 8px; }
+  .pill { padding: 6px 14px; }
+  .pill__note { font-size: 11.5px; }
+  .sim__result {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 0;
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: var(--white);
+  }
+  .sim__result-text { display: block; }
+  .sim__result .cta-wrap { align-items: flex-start; }
+  .sim__result .cta { width: auto; padding: 0 30px; letter-spacing: 0.04em; }
+  .sim__result .cta-note { text-align: left; }
+}
+
+/* =========================================================
+   3. こんな方に
+   ========================================================= */
+.worries {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.worry {
+  position: relative;
+  padding: 20px 16px;
+  border: 1px solid var(--line);
+  border-radius: 24px 24px 24px 6px;
+  background: var(--white);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.7;
+}
+.worry::before {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 22px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 35%, var(--lavender) 0 45%, transparent 46%),
+    var(--blush);
+}
+.worries__answer {
+  margin-top: 36px;
+  font-size: 17px;
+  font-weight: 700;
+  text-align: center;
+}
+.worries__answer em {
+  background: linear-gradient(transparent 62%, var(--lavender) 62%);
+}
+@media (min-width: 768px) {
+  .worries {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .worry { padding: 28px 24px; font-size: 17px; }
+  .worries__answer { margin-top: 48px; font-size: 20px; }
+}
+
+/* =========================================================
+   アーチ写真(共通)
+   ========================================================= */
+.arch {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 999px 999px 24px 24px;
+  background: var(--milktea);
+}
+.arch--4x5 { aspect-ratio: 4 / 5; }
+.arch--3x4 { aspect-ratio: 3 / 4; border-radius: 999px 999px 20px 20px; }
+.arch img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* =========================================================
+   4. 選ばれる3つの理由
+   ========================================================= */
+.reasons {
+  display: grid;
+  gap: 48px;
+}
+.reason {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.reason .arch { margin-bottom: 4px; }
+.reason__num {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 34px;
+  line-height: 1;
+  color: var(--cta);
+}
+.reason__title {
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+.reason__text {
+  font-size: 15px;
+  color: var(--ink-body);
+}
+@media (min-width: 768px) {
+  .reasons {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+  }
+  .reason__title { font-size: 20px; }
+  .reason__text { font-size: 16px; }
+}
+
+/* =========================================================
+   5. ビフォーアフター
+   ========================================================= */
+.ba {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.ba__frame {
+  --pos: 50%;
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 32px;
+  background: var(--milktea);
+  cursor: ew-resize;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.ba__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.ba__frame.is-switching .ba__img { opacity: 0; }
+.ba__after {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 calc(100% - var(--pos)) 0 0);
+}
+.ba__tag {
+  position: absolute;
+  top: 16px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--white);
+  font-family: var(--font-en);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  line-height: 1.6;
+  pointer-events: none;
+}
+.ba__tag--after { left: 16px; }
+.ba__tag--before { right: 16px; }
+.ba__line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--pos);
+  width: 2px;
+  margin-left: -1px;
+  background: var(--white);
+  pointer-events: none;
+}
+.ba__handle {
+  position: absolute;
+  top: 50%;
+  left: var(--pos);
+  width: 52px;
+  height: 52px;
+  margin: -26px 0 0 -26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--white);
+  box-shadow: 0 4px 16px rgba(59, 52, 54, 0.16);
+  pointer-events: none;
+  transition: transform var(--motion-fast) ease;
+}
+.ba__frame.is-dragging .ba__handle { transform: scale(1.1); }
+.ba__handle svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ba__range {
+  width: 100%;
+  max-width: 520px;
+}
+.ba__range input {
+  display: block;
+  width: 100%;
+  height: 32px;
+  margin: 0;
+  accent-color: var(--ink);
+  background: transparent;
+  cursor: pointer;
+}
+.ba__cases {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+.case-btn {
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--white);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color var(--motion-fast) ease, color var(--motion-fast) ease, border-color var(--motion-fast) ease;
+}
+.case-btn[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--white);
+}
+.ba__caption {
+  max-width: 520px;
+  font-size: 14px;
+  color: var(--ink-sub);
+  text-align: center;
+}
+
+/* =========================================================
+   6. スタイルギャラリー
+   ========================================================= */
+.gallery { position: relative; }
+.gallery__track {
+  display: flex;
+  gap: 16px;
+  margin: 0 calc(var(--gutter) * -1);
+  padding: 4px var(--gutter) 16px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
+  cursor: grab;
+}
+.gallery__track::-webkit-scrollbar { display: none; }
+.gallery__track.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+}
+.gallery__track:focus-visible { outline-offset: -2px; }
+
+.style-card {
+  flex: none;
+  width: min(68vw, 260px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  scroll-snap-align: start;
+  -webkit-tap-highlight-color: transparent;
+}
+.gallery__track.is-dragging .style-card { cursor: grabbing; }
+.style-card .arch img {
+  transition: transform 0.8s var(--ease-out);
+  -webkit-user-drag: none;
+}
+.style-card:hover .arch img { transform: scale(1.05); }
+.style-card .arch::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background:
+    linear-gradient(var(--ink), var(--ink)) center / 12px 1.5px no-repeat,
+    linear-gradient(var(--ink), var(--ink)) center / 1.5px 12px no-repeat,
+    rgba(255, 255, 255, 0.9);
+}
+.style-card__name {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+.style-card__meta {
+  margin-top: -6px;
+  font-size: 13px;
+  color: var(--ink-sub);
+}
+.style-card__meta .num {
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.gallery__nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 12px;
+}
+.gallery__progress {
+  position: relative;
+  flex: 1;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--line-strong);
+  overflow: hidden;
+}
+.gallery__progress span {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform-origin: left;
+  transform: scaleX(0.2);
+  transition: transform 0.2s linear;
+}
+.gallery__arrow {
+  display: none;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--white);
+  cursor: pointer;
+  transition: background-color var(--motion-fast) ease, opacity var(--motion-fast) ease;
+}
+.gallery__arrow:hover { background: var(--base); }
+.gallery__arrow:disabled { opacity: 0.35; cursor: default; }
+.gallery__arrow svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  margin: auto;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+@media (min-width: 768px) {
+  .gallery__track { gap: 20px; }
+  .style-card__name { font-size: 17px; }
+  .style-card__meta { font-size: 14px; }
+  .gallery__nav { margin-top: 20px; }
+  .gallery__arrow { display: block; }
+}
+
+/* 拡大表示 */
+.modal {
+  width: min(100% - 32px, 880px);
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  padding: 0;
+  border: none;
+  border-radius: 28px;
+  background: var(--base);
+  color: var(--ink);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.modal::backdrop {
+  background: rgba(46, 40, 41, 0.55);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+.modal[open] { animation: modalIn 0.5s var(--ease-out) both; }
+.modal[open]::backdrop { animation: fadeIn 0.4s ease both; }
+.modal.is-closing { animation: modalOut 0.25s ease both; }
+.modal.is-closing::backdrop { animation: fadeOut 0.25s ease both; }
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.98); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes modalOut {
+  to { opacity: 0; transform: translateY(12px); }
+}
+@keyframes fadeIn { from { opacity: 0; } }
+@keyframes fadeOut { to { opacity: 0; } }
+
+.modal__inner {
+  position: relative;
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+}
+.modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--white);
+  cursor: pointer;
+}
+.modal__close svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  margin: auto;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+.modal__media {
+  width: min(100%, 220px);
+  justify-self: center;
+}
+.modal[open] .modal__media { animation: archReveal var(--motion-reveal) var(--ease-out) 0.1s both; }
+.modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.modal__en {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1.4;
+  color: var(--cta);
+}
+.modal__title {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+.modal__desc {
+  font-size: 15px;
+  color: var(--ink-body);
+}
+.modal__spec {
+  display: grid;
+  grid-template-columns: 5em 1fr;
+  margin: 4px 0 8px;
+  border-top: 1px solid var(--line);
+}
+.modal__spec dt,
+.modal__spec dd {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+.modal__spec dt { font-size: 14px; color: var(--ink-sub); }
+.modal__spec dd { font-size: 16px; }
+.modal__spec dd.num { font-size: 20px; font-weight: 500; line-height: 1.5; }
+.modal .cta { width: 100%; }
+@media (min-width: 768px) {
+  .modal__inner {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 40px;
+    padding: 40px;
+  }
+  .modal__media { width: 100%; }
+  .modal__title { font-size: 26px; }
+  .modal .cta { width: auto; }
+}
+
+/* =========================================================
+   7. メニューと料金
+   ========================================================= */
+.price-list { border-top: 1px solid var(--line); }
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+.price__head {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.price__name {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+.price__note {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-sub);
+}
+.price__val {
+  font-family: var(--font-en);
+  font-size: 20px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.price__val small {
+  margin-left: 1px;
+  font-family: var(--font-ja);
+  font-size: 13px;
+  font-weight: 500;
+}
+.price-notice {
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--ink-sub);
+}
+@media (min-width: 768px) {
+  .price { padding: 20px 0; }
+  .price__name { font-size: 18px; }
+  .price__note { font-size: 14px; }
+  .price__val { font-size: 24px; }
+  .price__val small { font-size: 14px; }
+  .price-notice { font-size: 14px; }
+}
+
+/* =========================================================
+   8. スタイリスト
+   ========================================================= */
+.stylists {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.stylist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 24px 12px 12px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--white);
+  text-align: center;
+}
+.stylist__photo {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 6px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--lavender);
+}
+.stylist__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease-out);
+}
+.stylist:hover .stylist__photo img { transform: scale(1.06); }
+.stylist__role {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+  color: var(--cta);
+}
+.stylist__name {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-en);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  line-height: 1.3;
+}
+.stylist__name span {
+  font-family: var(--font-ja);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--ink-sub);
+}
+.stylist__skill {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-sub);
+}
+.stylist__ig {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-size: 13px;
+  text-underline-offset: 3px;
+}
+.stylist__ig svg,
+.access__links svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+@media (min-width: 900px) {
+  .stylists {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .stylist { gap: 8px; padding: 32px 20px 16px; }
+  .stylist__photo { width: 140px; height: 140px; }
+  .stylist__role { font-size: 13px; }
+  .stylist__name { font-size: 22px; }
+  .stylist__skill { font-size: 14px; }
+  .stylist__ig { font-size: 14px; }
+}
+
+/* =========================================================
+   9. お客様の声
+   ========================================================= */
+.voices {
+  display: grid;
+  gap: 16px;
+}
+.voice {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--white);
+}
+.voice__stars { display: flex; gap: 2px; }
+.voice__stars svg { width: 16px; height: 16px; fill: var(--cta); }
+.voice__text { font-size: 15px; line-height: 1.9; }
+.voice__who {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  font-size: 13px;
+  color: var(--ink-sub);
+}
+.voice__chip {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--c);
+}
+@media (min-width: 768px) {
+  .voices {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .voice { padding: 28px; }
+  .voice__text { font-size: 16px; }
+  .voice__who { font-size: 14px; }
+}
+
+/* =========================================================
+   10. 予約の流れ・よくある質問
+   ========================================================= */
+.flow {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 40px;
+  counter-reset: none;
+}
+.flow__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  padding: 20px;
+  border-radius: 24px;
+  background: var(--white);
+}
+.flow__num {
+  grid-row: 1 / 3;
+  align-self: center;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--cta);
+}
+.flow__title { font-size: 16px; font-weight: 700; line-height: 1.6; }
+.flow__text { font-size: 13px; line-height: 1.6; color: var(--ink-sub); }
+@media (min-width: 768px) {
+  .flow {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .flow__item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 24px;
+  }
+  .flow__item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -12px;
+    z-index: 1;
+    width: 8px;
+    height: 8px;
+    border-top: 1.5px solid var(--ink-sub);
+    border-right: 1.5px solid var(--ink-sub);
+    transform: translate(0, -50%) rotate(45deg);
+  }
+  .flow__num { font-size: 28px; }
+  .flow__title { font-size: 17px; }
+  .flow__text { font-size: 14px; }
+}
+
+.faq {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.faq__item {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--white);
+}
+.faq__q {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.6;
+  list-style: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.faq__q::-webkit-details-marker { display: none; }
+.faq__q:focus-visible { border-radius: 20px; outline-offset: -2px; }
+.faq__mark {
+  flex: none;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--cta);
+}
+.faq__q-text { flex: 1; }
+.faq__icon {
+  position: relative;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bg-blush);
+}
+.faq__icon::before,
+.faq__icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 11px;
+  height: 1.5px;
+  margin: -0.75px 0 0 -5.5px;
+  background: var(--ink);
+  transition: transform 0.4s var(--ease-out);
+}
+.faq__icon::after { transform: rotate(90deg); }
+.faq__item[open] .faq__icon::after { transform: rotate(0deg); }
+.faq__a {
+  overflow: hidden;
+}
+.faq__a p {
+  padding: 0 20px 22px 54px;
+  font-size: 15px;
+  color: var(--ink-body);
+}
+@media (min-width: 768px) {
+  .faq__q { padding: 12px 24px; font-size: 17px; }
+  .faq__a p { padding: 0 24px 22px 58px; font-size: 16px; }
+}
+
+/* =========================================================
+   11. 店舗情報・アクセス
+   ========================================================= */
+.access {
+  display: grid;
+  gap: 32px;
+}
+.access__list {
+  display: grid;
+  grid-template-columns: 5.5em 1fr;
+  gap: 10px 12px;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.access__list dt { color: var(--ink-sub); }
+.access__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin-top: 20px;
+  font-size: 15px;
+}
+.access__links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  text-underline-offset: 3px;
+}
+.access__photo {
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  border-radius: 28px;
+  background: var(--milktea);
+}
+.access__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media (min-width: 900px) {
+  .access {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    align-items: center;
+    gap: 40px 56px;
+  }
+  .access__list { font-size: 16px; gap: 12px 16px; }
+  .access__photo { border-radius: 32px; }
+}
+
+/* =========================================================
+   12. 最終CTA・フッター
+   ========================================================= */
+.final {
+  position: relative;
+  overflow: clip;
+  background: var(--bg-dark);
+  color: var(--base);
+}
+.blob--final-a {
+  width: 380px; height: 380px;
+  top: -160px; left: -60px;
+  background: radial-gradient(circle, rgba(183,169,201,.45), rgba(183,169,201,0) 70%);
+}
+.blob--final-b {
+  width: 340px; height: 340px;
+  bottom: -160px; right: -60px;
+  background: radial-gradient(circle, rgba(196,154,151,.4), rgba(196,154,151,0) 70%);
+}
+.final__inner {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 88px var(--gutter);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+.final__en {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 19px;
+  line-height: 1.4;
+  color: #E6C3CB;
+  transform: rotate(-3deg);
+}
+.final__title {
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1.65;
+}
+.final .cta-wrap--center { margin-top: 8px; }
+.final .cta-note { color: #E9DEDB; }
+@media (min-width: 768px) {
+  .blob--final-a { width: 520px; height: 520px; top: -200px; left: 10%; }
+  .blob--final-b { width: 440px; height: 440px; bottom: -200px; right: 8%; }
+  .final__inner { padding: 120px var(--gutter); gap: 24px; }
+  .final__en { font-size: 22px; }
+  .final__title { font-size: 36px; line-height: 1.6; }
+}
+
+.footer {
+  background: var(--bg-darker);
+  color: #E9DEDB;
+}
+.footer__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px var(--gutter) 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+.logo__mark--footer { color: var(--base); }
+.logo__mark--footer .logo__e { color: #E6C3CB; }
+.footer__note { font-size: 12px; line-height: 1.7; }
+@media (min-width: 768px) {
+  .footer__inner {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+  .footer__note { font-size: 13px; }
+}
+
+/* =========================================================
+   スマホ下部の予約ボタン
+   ========================================================= */
+.sticky-cta {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  background: rgba(251, 247, 245, 0.96);
+  border-top: 1px solid var(--line);
+  transform: translateY(110%);
+  visibility: hidden;
+  transition:
+    transform 0.5s var(--ease-out),
+    visibility 0s linear 0.5s;
+}
+.sticky-cta.is-visible {
+  transform: none;
+  visibility: visible;
+  transition:
+    transform 0.5s var(--ease-out),
+    visibility 0s;
+}
+.sticky-cta .cta {
+  width: 100%;
+  padding: 0 20px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+@media (min-width: 900px) {
+  .sticky-cta { display: none; }
+}
+
+/* =========================================================
+   スクロールで現れる動き(JSが動くときだけ隠す)
+   ========================================================= */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--motion-base) ease,
+    transform 0.9s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+.js [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* 英字ラベル:斜めに傾いたまま、ふわっと */
+.js [data-reveal="label"] {
+  transform: translateY(14px) rotate(-10deg);
+  transform-origin: left center;
+  transition:
+    opacity 0.8s ease,
+    transform 1.1s var(--ease-spring);
+}
+.js [data-reveal="label"].is-in { transform: rotate(-3deg); }
+
+/* アーチ写真:下から上へ切り抜きが開く */
+.js [data-reveal="arch"] {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path var(--motion-reveal) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 90ms + 150ms);
+}
+.js [data-reveal="arch"].is-in { clip-path: inset(0 0 0 0); }
+.js [data-reveal="arch"] img {
+  transform: scale(1.12);
+  transition: transform 1.6s var(--ease-out);
+  transition-delay: inherit;
+}
+.js [data-reveal="arch"].is-in img { transform: scale(1); }
+
+@keyframes archReveal {
+  from { clip-path: inset(100% 0 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+/* =========================================================
+   視差効果を減らす設定:すべての動きを止めて最初から表示
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .hero__layer { display: none; }
+  .js [data-reveal],
+  .js [data-reveal="arch"],
+  .js [data-reveal="arch"] img {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+  .js [data-reveal="label"] { transform: rotate(-3deg); }
+}
